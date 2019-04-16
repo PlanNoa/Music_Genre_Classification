@@ -2,8 +2,8 @@ from __future__ import print_function
 import freesound  # $ git clone https://github.com/MTG/freesound-python
 import os
 
-api_key = 'suGpSf4rteOn8Qnf1fNiWAb2rbp8WvayEvUhG7P5'
-folder = './Jazz/'
+api_key = 'API-KEY'
+folder = './YOUR FOLDER DIR/'
 
 freesound_client = freesound.FreesoundClient()
 freesound_client.set_token(api_key)
