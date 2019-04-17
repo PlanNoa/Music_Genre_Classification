@@ -1,9 +1,11 @@
 from __future__ import print_function
-import freesound  # $ git clone https://github.com/MTG/freesound-python
+import freesound
 import os
 
-api_key = 'API-KEY'
-folder = './YOUR FOLDER DIR/'
+topic = input()
+
+api_key = 'YourAIPKey'
+folder = './'+topic+'/'
 
 freesound_client = freesound.FreesoundClient()
 freesound_client.set_token(api_key)
@@ -13,18 +15,18 @@ try:
 except:
     pass
 
-query = input()
-
-print("Searching for '" + query + "':\n")
+print("Searching for '" + topic + "':\n")
 
 results_pager = freesound_client.text_search(
-    query=query,
+    query=topic,
     sort="rating_desc",
     fields="id,name,previews,username"
 )
 print("Num results:", results_pager.count)
 
+
 for page_idx in range(results_pager.count):
+    if page_idx + 1 > 20: break #only 300 files
     print("\t----- PAGE", str(page_idx + 1), "-----")
     for sound in results_pager:
         print("\t-", sound.name, "by", sound.username)
@@ -35,5 +37,3 @@ for page_idx in range(results_pager.count):
         except:
             pass
     results_pager = results_pager.next_page()
-
-    print()
