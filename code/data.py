@@ -49,21 +49,3 @@ def getdata(tag):
         pickle.dump(data, f)
 
     return data
-
-with open("../Data/musics.pkl", 'rb') as f:
-    data = pickle.load(f)
-n = []
-for d in data[0]:
-    for dd in d:
-        for ddd in dd[0]:
-            n.append(ddd)
-m = []
-for d in data[1]:
-    temp = [0] * 10
-    temp[int(d - 1)] = 1
-    for i in range(96):
-        m.append(temp)
-print(len(n))
-print(len(m))
-with open("../Data/musics_temp.pkl", 'wb') as f:
-    pickle.dump([n, m], f)
