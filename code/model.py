@@ -1,151 +1,9 @@
-# import numpy as np
-# from keras.models import Sequential
-# from keras.layers import Dense
-# from keras.layers import Flatten
-# from keras.layers.convolutional import Conv2D
-# from keras.layers.convolutional import MaxPooling2D
-# from keras.preprocessing.image import ImageDataGenerator
-# from keras import backend as K
-# from keras.layers import Input, Dense
-# from keras.models import Sequential
-# from keras.layers import Dense, Dropout, Reshape, Permute, Activation, merge, Embedding
-# from keras.layers.convolutional import Convolution2D
-# from keras.layers.convolutional import MaxPooling2D, ZeroPadding2D
-# from keras.layers.normalization import BatchNormalization
-# from keras.layers.advanced_activations import ELU
-# from keras.layers.recurrent import LSTM
-# from keras.utils.data_utils import get_file
-# import pickle
-#
-# np.random.seed(10)
-#
-# # def MusicTaggerCRNN(weights='msd', input_tensor=None):
-# #
-# #     # if K.image_dim_ordering() == 'th':
-# #     #     input_shape = (1, 96, 1366)
-# #     # else:
-# #     #     input_shape = (96, 1366, 1)
-# #     melgram_input = Input(shape=(1, 96, 1366))
-# #     # channel_axis = 3
-# #     # freq_axis = 1
-# #     # time_axis = 2
-# #
-# #     # # x = ZeroPadding2D(padding=(0, 37))(melgram_input)
-# #     # x = BatchNormalization(axis=time_axis, name='bn_0_freq')(melgram_input)
-# #     #
-# #     # x = Convolution2D(64, 3, 3, border_mode='same', name='conv1', trainable=False)(x)
-# #     # x = BatchNormalization(axis=channel_axis, mode=0, name='bn1', trainable=False)(x)
-# #     # x = ELU()(x)
-# #     # # x = MaxPooling2D(pool_size=(2, 2), strides=(2, 2), name='pool1', trainable=False)(x)
-# #     # x = Dropout(0.1, name='dropout1', trainable=False)(x)
-# #     #
-# #     # x = Convolution2D(128, 3, 3, border_mode='same', name='conv2', trainable=False)(x)
-# #     # x = BatchNormalization(axis=channel_axis, mode=0, name='bn2', trainable=False)(x)
-# #     # x = ELU()(x)
-# #     # # x = MaxPooling2D(pool_size=(3, 3), strides=(3, 3), name='pool2', trainable=False)(x)
-# #     # x = Dropout(0.1, name='dropout2', trainable=False)(x)
-# #     #
-# #     # x = Convolution2D(128, 3, 3, border_mode='same', name='conv3', trainable=False)(x)
-# #     # x = BatchNormalization(axis=channel_axis, mode=0, name='bn3', trainable=False)(x)
-# #     # x = ELU()(x)
-# #     # # x = MaxPooling2D(pool_size=(4, 4), strides=(4, 4), name='pool3', trainable=False)(x)
-# #     # x = Dropout(0.1, name='dropout3', trainable=False)(x)
-# #     #
-# #     # x = Convolution2D(128, 3, 3, border_mode='same', name='conv4', trainable=False)(x)
-# #     # x = BatchNormalization(axis=channel_axis, mode=0, name='bn4', trainable=False)(x)
-# #     # x = ELU()(x)
-# #     # # x = MaxPooling2D(pool_size=(4, 4), strides=(4, 4), name='pool4', trainable=False)(x)
-# #     # x = Dropout(0.1, name='dropout4', trainable=False)(x)
-# #     #
-# #     # # reshaping
-# #     # if K.image_dim_ordering() == 'th':
-# #     #     print(1)
-# #     #     x = Permute((3, 1, 2))(x)
-# #     # print(x)
-# #     # # x = Reshape((1, 170, 128))(x)
-# #     #
-# #     # # GRU block 1, 2, output
-# #     # # x = LSTM(32, return_sequences=True, name='gru1', input_shape=(96, 1366))(x)
-# #     # # x = LSTM(32, return_sequences=False, name='gru2')(x)
-# #     # # x = Dropout(0.3, name='final_drop')(x)
-# #     #
-# #     # if weights is None:
-# #     #     # Create model
-# #     #     print(x.shape)
-# #     #     x = Dense(units = 10, activation='relu', name='output1')(x)
-# #     #     x = Dense(units = 10, activation='softmax', name='output2')(x)
-# #     #     print(x.shape)
-# #     #     model = Model(melgram_input, x)
-# #     #     return model
-#
-# model = Sequential()
-# model.add(Dense(512, input_dim = 96 * 1366, activation='relu'))
-# model.add(Dense(1, activation='softmax'))
-#
-# nb_classes = 10
-# nb_epoch = 40
-# batch_size = 100
-#
-# model_name = "crnn_net_adam_ours"
-# model_path = "models_trained/" + model_name + "/"
-# weights_path = "models_trained/" + model_name + "/weights/"
-#
-# time_elapsed = 0
-#
-# # model = MusicTaggerCRNN(weights=None, input_tensor=(1, 96, 1366))
-# model.compile(loss='categorical_crossentropy',
-#               optimizer='adam',
-#               metrics=['accuracy'])
-#
-# with open("../Data/musics_temp .pkl", 'rb') as f:
-#     data = pickle.load(f)
-#
-# X = data[0]
-# # for x in data[0]:
-# #     X.append(x[0])
-# Y = data[1]
-# # for y in data[1]:
-# #     Y.append([y])
-#
-# # print(np.array(X).shape)
-# # print(np.array(Y).shape)
-# # print(X[0])
-# X, Y = np.array(X), np.array(Y)
-# X_train = X[:int(len(X) * 0.8)]
-# X_test = X[int(len(X) * 0.8):]
-# Y_train = Y[:int(len(X) * 0.8)]
-# Y_test = Y[int(len(X) * 0.8):]
-# print(model.summary())
-# print()
-#
-# print ("Training the model")
-# for epoch in range(1,nb_epoch+1):
-#     print ("Number of epoch: " +str(epoch)+"/"+str(nb_epoch))
-#     scores = model.fit(X_train, Y_train, batch_size=batch_size, nb_epoch=1, verbose=1, validation_data=(X_test, Y_test))
-#     print ("Time Elapsed: " +str(time_elapsed))
-#
-#     train = model.predict(X_train)
-#     print(train)
-#     # score_train = model.evaluate(X_train, Y_train, verbose=0)
-#     # print('Train Loss:', score_train[0])
-#     # print('Train Accuracy:', score_train[1])
-#     #
-#     # score_test = model.evaluate(X_test, Y_test, verbose=0)
-#     # print('Test Loss:', score_test[0])
-#     # print('Test Accuracy:', score_test[1])
-#
-#
-#     if epoch % 5 == 0:
-#         model.save_weights(weights_path + model_name + "_epoch_" + str(epoch) + ".h5")
-#         print("Saved model to disk in: " + weights_path + model_name + "_epoch" + str(epoch) + ".h5")
-#
-#
-
 import tensorflow as tf
 import random
 import pickle
 import os
 from sklearn.utils import shuffle
+from data import getdata
 import numpy as np
 
 X = tf.placeholder(tf.float32, [None, 1366])
@@ -185,14 +43,13 @@ accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 sess = tf.Session()
 sess.run(tf.global_variables_initializer())
 
-SAVER_DIR = "model"
+SAVER_DIR = "Your DIR"
 saver = tf.train.Saver()
-ckpt = tf.train.get_checkpoint_state("C:/Users/이희웅/PycharmProjects/librosa/Code/model/model-")
+ckpt = tf.train.get_checkpoint_state(SAVER_DIR)
 
-with open("../Data/musics_temp.pkl", 'rb') as f:
-    data = pickle.load(f)
+tags = np.array(['Alternative', 'Blues', 'Country', 'Hiphop', 'Jazz', 'Metal', 'POP', 'RnB', 'Reggae', 'Rock'])
+data = getdata(tags)
 
-# X, Y = np.array(data[0]), np.array(data[1])
 x, y = shuffle(data[0], data[1])
 train_X = x[:int(len(x) * 0.8)]
 test_X = x[int(len(x) * 0.8):]
@@ -201,7 +58,7 @@ test_Y = y[int(len(y) * 0.8):]
 
 batch_size = 1000
 
-for epoch in range(1000):
+for epoch in range(30):
     avg_cost = 0
     total_batch = int(len(train_X) / batch_size)
 
@@ -218,10 +75,10 @@ for epoch in range(1000):
     if epoch % 50 == 0:
         _accuracy = sess.run(accuracy, feed_dict={X: test_X, Y: test_Y})
         try:
-            os.mkdir("C:/Users/이희웅/PycharmProjects/librosa/Code/model/model-" + str(_accuracy))
+            os.mkdir(SAVER_DIR + "/model-" + str(_accuracy))
         except:
             pass
-        saver.save(sess, "C:/Users/이희웅/PycharmProjects/librosa/Code/model/model-" + str(_accuracy) + "/model")
+        saver.save(sess, SAVER_DIR + "/model-" + str(_accuracy) + "/model")
         print("accuracy (Restored) : %f" % _accuracy)
 
 print('Learning Finished!')
