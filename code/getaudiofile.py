@@ -1,10 +1,10 @@
 from __future__ import print_function
-import freesound
+from Code import freesound
 import os
 
 topic = input()
 
-api_key = 'YourAIPKey'
+api_key = 'suGpSf4rteOn8Qnf1fNiWAb2rbp8WvayEvUhG7P5'
 folder = './'+topic+'/'
 
 freesound_client = freesound.FreesoundClient()
@@ -24,9 +24,8 @@ results_pager = freesound_client.text_search(
 )
 print("Num results:", results_pager.count)
 
-
 for page_idx in range(results_pager.count):
-    if page_idx + 1 > 20: break #only 300 files
+    if page_idx + 1 > 20: break
     print("\t----- PAGE", str(page_idx + 1), "-----")
     for sound in results_pager:
         print("\t-", sound.name, "by", sound.username)
@@ -37,3 +36,5 @@ for page_idx in range(results_pager.count):
         except:
             pass
     results_pager = results_pager.next_page()
+
+    print()

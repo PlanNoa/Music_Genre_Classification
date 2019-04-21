@@ -2,13 +2,12 @@ import librosa
 import numpy as np
 from math import floor
 
-SR = 12000
-N_FFT = 512
-N_MELS = 96
-hop_length = 256
-dura = 29.12
-
 def compute_melgram(audio_path):
+    SR = 12000
+    N_FFT = 512
+    N_MELS = 96
+    hop_length = 256
+    dura = 29.12
 
     src, sr = librosa.load(audio_path, sr=SR)
     n_sample = src.shape[0]
