@@ -4,7 +4,7 @@ import os
 
 topic = input()
 
-api_key = 'suGpSf4rteOn8Qnf1fNiWAb2rbp8WvayEvUhG7P5'
+api_key = 'API-KEY'
 folder = './'+topic+'/'
 
 freesound_client = freesound.FreesoundClient()
