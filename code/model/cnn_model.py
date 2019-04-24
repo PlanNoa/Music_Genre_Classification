@@ -16,6 +16,7 @@ def getBatch(data, labels, batchSize, iteration):
 
 
 if __name__ == "__main__":
+    np.random.seed(1937)
     learning_rate = 0.001
     training_iters = 100000
     batch_size = 64
@@ -24,9 +25,10 @@ if __name__ == "__main__":
 
     n_input = 96 * 1366
     n_classes = 10
-    dropout = 0.75
+    dropout = 0.9
+    best_acc = 0.0
 
-    with open("../Data/musics_f.pkl", 'rb') as f:
+    with open("C:/Users/user/Data/musics_f.pkl", 'rb') as f:
         _data = pickle.load(f)
 
     data = _data[0]
@@ -42,7 +44,7 @@ if __name__ == "__main__":
 
     x = tf.placeholder(tf.float32, [None, 96, 1366, 1])
     y = tf.placeholder(tf.float32, [None, n_classes])
-    keep_prob = tf.placeholder(tf.float32)  # dropout (keep probability)
+    keep_prob = tf.placeholder(tf.float32)
 
 
     def conv2d(sound, w, b):
@@ -70,7 +72,7 @@ if __name__ == "__main__":
 
         dense1 = tf.reshape(conv3, [-1, _weights['wd1'].get_shape().as_list()[0]])
         dense1 = tf.nn.relu(tf.add(tf.matmul(dense1, _weights['wd1']), _biases['bd1']))
-        dense1 = tf.nn.dropout(dense1, _dropout)  # Apply Dropout
+        dense1 = tf.nn.dropout(dense1, _dropout)
 
         out = tf.add(tf.matmul(dense1, _weights['out']), _biases['out'])
         return out
@@ -102,7 +104,7 @@ if __name__ == "__main__":
 
     init = tf.initialize_all_variables()
 
-    SAVER_DIR = "C:/Users/이희웅/PycharmProjects/librosa/Code/"
+    SAVER_DIR = "C:/Users/user/model/"
     saver = tf.train.Saver()
     ckpt = tf.train.get_checkpoint_state(SAVER_DIR)
 
@@ -117,13 +119,16 @@ if __name__ == "__main__":
                 if step % display_step == 0:
                     acc = sess.run(accuracy, feed_dict={x: batch_xs, y: batch_ys, keep_prob: 1.})
                     loss = sess.run(cost, feed_dict={x: batch_xs, y: batch_ys, keep_prob: 1.})
-                    print("Iter " + str(step * batch_size) + ", Minibatch Loss= " + "{:.6f}".format(loss) + ", Training Accuracy= " + "{:.5f}".format(acc))
+                    print("Iter " + str(step * batch_size) + ", Loss= " + "{:.6f}".format(loss) + ", Accuracy= " + "{:.5f}".format(acc))
+                    if acc > best_acc:
+                        best_acc = acc
+                        save_path = saver.save(sess, SAVER_DIR + "model-" + str(acc) + ".ckpt")
             except:
                 print("save failed")
             step += 1
         print("Optimization Finished!")
 
-        save_path = saver.save(sess, "model.final")
+        save_path = saver.save(sess, SAVER_DIR + "model.final")
         print("Model saved in file: %s" % save_path)
 
         print("Testing Accuracy:", sess.run(accuracy, feed_dict={x: testData,
