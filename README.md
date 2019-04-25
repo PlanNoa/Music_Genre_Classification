@@ -18,4 +18,6 @@ I classified thest genres :
   9.  reggae<br>
   10. rock<br>
 
-# Processing
+# Result
+
+I got only 40% accuracy, but I was able to achieve great results by dividing the music by 30 seconds.
