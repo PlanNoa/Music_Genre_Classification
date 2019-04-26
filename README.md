@@ -1,6 +1,6 @@
 # Music_Genre_Classification
 
-Music Genre Classification with Deep Learning (Deep Neural Networks).
+Music Genre Classification with Deep Learning.
 
 # Datasets
 
