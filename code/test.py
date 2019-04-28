@@ -76,7 +76,7 @@ accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))
 
 
 cut = 360161
-wav = "C:/Users/이희웅/Music/Evolve/Imagine Dragons Dancing In The Dark Ft Dawn Foxes Music.mp3"
+wav = "Something Just Like This.mp3"
 src, sr = librosa.load(wav, 12000)
 
 data = []
@@ -89,7 +89,7 @@ for c in range(0, len(src), int(cut/2)):
 
 sess = tf.Session()
 saver = tf.train.Saver(tf.global_variables())
-ckpt = tf.train.get_checkpoint_state('C:/Users/이희웅/PycharmProjects/librosa/Code/model/model-real')
+ckpt = tf.train.get_checkpoint_state('C:/Users/이희웅/PycharmProjects/librosa/Code/model/model-real-0.9')
 if ckpt and tf.train.checkpoint_exists(ckpt.model_checkpoint_path):
     saver.restore(sess, ckpt.model_checkpoint_path)
 else:
@@ -106,4 +106,12 @@ for d in data:
     for p in _pred:
         result.append(softmax(p))
 
-print(sum(result))
+tag = {0 : 'blues', 1 : 'classical', 2 : 'country', 3 : 'disco', 4 : 'hiphop',
+       5 : 'jazz', 6 : 'metal', 7 : 'pop', 8 : 'reggae', 9 : 'rock'}
+
+result = list(sum(result))
+for r in  range(10):
+    print(tag[r] + " - " + str(result[r]/sum(result)))
+
+print(result)
+print("I think that genre of this song is " + tag[result.index(max(result))])
