@@ -16,7 +16,7 @@ def getBatch(data, labels, batchSize, iteration):
 
 
 if __name__ == "__main__":
-    np.random.seed(1937)
+    np.random.seed(777)
     learning_rate = 0.001
     training_iters = 100000
     batch_size = 64
