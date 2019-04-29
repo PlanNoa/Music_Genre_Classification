@@ -22,4 +22,4 @@ I classified thest genres :
 
 I got only 40% accuracy, but I was able to achieve great results by dividing the music by 30 seconds.
 
-![](/img/something just like this.jpg)
+![](./img/something just like this.jpg)
