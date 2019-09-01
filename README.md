@@ -20,7 +20,7 @@ I classified thest genres :
 
 # Result
 
-I got only 40% accuracy, but I was able to achieve great results by dividing the music by 30 seconds.
+I got only 40% accuracy, but I was able to achieve better results by dividing the music by 30 seconds.
 
 ![](./img/something%20just%20like%20this.jpg)
 ![](./img/something%20just%20like%20this_result.PNG)
